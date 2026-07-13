@@ -263,14 +263,39 @@ button:focus-visible {
 }
 
 .power-row {
-  display: flex;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(58px, 1fr));
+  gap: 6px;
+  align-items: stretch;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 }
 
-.power-row strong {
+.power-pill {
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  gap: 1px;
+  padding: 5px 4px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fbfcfc;
+  text-align: center;
+}
+
+.power-pill em {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.power-pill strong {
   color: var(--ink);
+  font-size: 0.82rem;
+  line-height: 1.1;
 }
 
 .cards-grid.list-mode {

@@ -171,8 +171,8 @@ function cardTile(card) {
       ${badge(firstCommodity(card)?.name)}
     </div>
     <div class="power-row">
-      ${card.levelText ? `<span>LV <strong>${escapeHtml(card.levelText)}</strong></span>` : ''}
-      ${powerValues(card).map((item) => `<span>${item.label} <strong>${number(item.value)}</strong></span>`).join('')}
+      ${card.levelText ? `<span class="power-pill"><em>LV</em><strong>${escapeHtml(card.levelText)}</strong></span>` : ''}
+      ${powerValues(card).map((item) => `<span class="power-pill"><em>${escapeHtml(powerShortLabel(item.label))}</em><strong>${number(item.value)}</strong></span>`).join('')}
     </div>
   `;
 
@@ -271,6 +271,17 @@ function powerValues(card) {
   ]
     .filter(([, value]) => value !== undefined && value !== null && value !== '')
     .map(([label, value]) => ({ label, value }));
+}
+
+function powerShortLabel(label) {
+  const labels = {
+    Single: 'S',
+    Double: 'D',
+    Triple: 'T',
+    Quad: 'Q',
+    EXTRA: 'EX',
+  };
+  return labels[label] || label;
 }
 
 function maxPower(card) {
