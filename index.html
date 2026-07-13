@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ultraman Card Catalog</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Ultraman Card Catalog</h1>
+      <p id="summary">Loading cards...</p>
+    </div>
+    <div class="view-toggle" role="group" aria-label="View mode">
+      <button id="gridView" class="icon-button active" type="button" aria-label="Grid view" title="Grid view">▦</button>
+      <button id="listView" class="icon-button" type="button" aria-label="List view" title="List view">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="Catalog filters">
+      <label class="search-box">
+        <span>Search</span>
+        <input id="searchInput" type="search" placeholder="Name, code, effect, product, character" autocomplete="off">
+      </label>
+
+      <label>
+        <span>Set</span>
+        <select id="setFilter"></select>
+      </label>
+
+      <label>
+        <span>Feature</span>
+        <select id="featureFilter"></select>
+      </label>
+
+      <label>
+        <span>Type</span>
+        <select id="typeFilter"></select>
+      </label>
+
+      <label>
+        <span>Rarity</span>
+        <select id="rarityFilter"></select>
+      </label>
+
+      <label>
+        <span>Sort</span>
+        <select id="sortSelect">
+          <option value="code">Code</option>
+          <option value="name">Name</option>
+          <option value="rarity">Rarity</option>
+          <option value="level">Level</option>
+          <option value="power">Power</option>
+          <option value="year">Year</option>
+        </select>
+      </label>
+
+      <button id="resetFilters" class="text-button" type="button">Reset</button>
+    </section>
+
+    <section class="stats-strip" aria-label="Catalog stats">
+      <div><span id="shownCount">0</span><small>shown</small></div>
+      <div><span id="totalCount">0</span><small>cards</small></div>
+      <div><span id="setCount">0</span><small>sets</small></div>
+      <div><span id="rarityCount">0</span><small>rarities</small></div>
+    </section>
+
+    <section id="cardsGrid" class="cards-grid" aria-live="polite"></section>
+    <div id="emptyState" class="empty-state" hidden>No cards match the current filters.</div>
+  </main>
+
+  <aside id="detailPanel" class="detail-panel" aria-hidden="true">
+    <div class="detail-backdrop" id="detailBackdrop"></div>
+    <article class="detail-card" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <button id="closeDetail" class="icon-button close-button" type="button" aria-label="Close" title="Close">×</button>
+      <div class="detail-media">
+        <img id="detailImage" alt="">
+      </div>
+      <div class="detail-body">
+        <div class="detail-kicker" id="detailCode"></div>
+        <h2 id="detailTitle"></h2>
+        <div class="badge-row" id="detailBadges"></div>
+        <dl class="detail-stats" id="detailStats"></dl>
+        <section>
+          <h3>Effect</h3>
+          <p id="detailEffect"></p>
+        </section>
+        <section>
+          <h3>Flavor</h3>
+          <p id="detailOther"></p>
+        </section>
+        <section>
+          <h3>Products</h3>
+          <p id="detailProducts"></p>
+        </section>
+      </div>
+    </article>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
