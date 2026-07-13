@@ -124,7 +124,7 @@ function sortCards() {
     if (mode === 'name') return collator.compare(a.name || '', b.name || '');
     if (mode === 'rarity') return numeric(a.rarity) - numeric(b.rarity) || collator.compare(a.code || '', b.code || '');
     if (mode === 'level') return numeric(a.level) - numeric(b.level) || collator.compare(a.code || '', b.code || '');
-    if (mode === 'power') return Math.max(numeric(b.singleVal), numeric(b.doubleVal)) - Math.max(numeric(a.singleVal), numeric(a.doubleVal));
+    if (mode === 'power') return maxPower(b) - maxPower(a);
     if (mode === 'year') return numeric(a.yearOfBirth) - numeric(b.yearOfBirth) || collator.compare(a.code || '', b.code || '');
     return collator.compare(a.code || '', b.code || '');
   });
@@ -172,8 +172,7 @@ function cardTile(card) {
     </div>
     <div class="power-row">
       ${card.levelText ? `<span>LV <strong>${escapeHtml(card.levelText)}</strong></span>` : ''}
-      ${card.singleVal ? `<span>Single <strong>${number(card.singleVal)}</strong></span>` : ''}
-      ${card.doubleVal ? `<span>Double <strong>${number(card.doubleVal)}</strong></span>` : ''}
+      ${powerValues(card).map((item) => `<span>${item.label} <strong>${number(item.value)}</strong></span>`).join('')}
     </div>
   `;
 
@@ -195,8 +194,7 @@ function openDetail(card) {
   ].join('');
   els.detailStats.innerHTML = statRows([
     ['Level', card.levelText],
-    ['Single', card.singleVal && number(card.singleVal)],
-    ['Double', card.doubleVal && number(card.doubleVal)],
+    ...powerValues(card).map((item) => [item.label, number(item.value)]),
     ['Year', card.yearOfBirth],
     ['Illustrator', card.illustratorName],
     ['Rarity Code', card.rarity],
@@ -261,6 +259,22 @@ function normalize(value) {
 function numeric(value) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function powerValues(card) {
+  return [
+    ['Single', card.singleVal],
+    ['Double', card.doubleVal],
+    ['Triple', card.tripleVal],
+    ['Quad', card.quattroVal],
+    ['EXTRA', card.extraVal],
+  ]
+    .filter(([, value]) => value !== undefined && value !== null && value !== '')
+    .map(([label, value]) => ({ label, value }));
+}
+
+function maxPower(card) {
+  return Math.max(0, ...powerValues(card).map((item) => numeric(item.value)));
 }
 
 function number(value) {
